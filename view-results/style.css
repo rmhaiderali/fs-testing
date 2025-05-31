@@ -1,0 +1,279 @@
+.terminal span {
+  color: var(--fg);
+  background: var(--bg);
+}
+
+.terminal::selection,
+.terminal span::selection {
+  color: var(--bg, var(--background));
+  background: var(--fg, var(--selection));
+}
+
+.ansi-black-fg {
+  --fg: var(--black);
+}
+
+.ansi-red-fg {
+  --fg: var(--red);
+}
+
+.ansi-green-fg {
+  --fg: var(--green);
+}
+
+.ansi-yellow-fg {
+  --fg: var(--yellow);
+}
+
+.ansi-blue-fg {
+  --fg: var(--blue);
+}
+
+.ansi-magenta-fg {
+  --fg: var(--purple);
+}
+
+.ansi-cyan-fg {
+  --fg: var(--cyan);
+}
+
+.ansi-white-fg {
+  --fg: var(--white);
+}
+
+.ansi-bright-black-fg {
+  --fg: var(--brightBlack);
+}
+
+.ansi-bright-red-fg {
+  --fg: var(--brightRed);
+}
+
+.ansi-bright-green-fg {
+  --fg: var(--brightGreen);
+}
+
+.ansi-bright-yellow-fg {
+  --fg: var(--brightYellow);
+}
+
+.ansi-bright-blue-fg {
+  --fg: var(--brightBlue);
+}
+
+.ansi-bright-magenta-fg {
+  --fg: var(--brightPurple);
+}
+
+.ansi-bright-cyan-fg {
+  --fg: var(--brightCyan);
+}
+
+.ansi-bright-white-fg {
+  --fg: var(--brightWhite);
+}
+
+.ansi-black-bg {
+  --bg: var(--black);
+}
+
+.ansi-red-bg {
+  --bg: var(--red);
+}
+
+.ansi-green-bg {
+  --bg: var(--green);
+}
+
+.ansi-yellow-bg {
+  --bg: var(--yellow);
+}
+
+.ansi-blue-bg {
+  --bg: var(--blue);
+}
+
+.ansi-magenta-bg {
+  --bg: var(--purple);
+}
+
+.ansi-cyan-bg {
+  --bg: var(--cyan);
+}
+
+.ansi-white-bg {
+  --bg: var(--white);
+}
+
+.ansi-bright-black-bg {
+  --bg: var(--brightBlack);
+}
+
+.ansi-bright-red-bg {
+  --bg: var(--brightRed);
+}
+
+.ansi-bright-green-bg {
+  --bg: var(--brightGreen);
+}
+
+.ansi-bright-yellow-bg {
+  --bg: var(--brightYellow);
+}
+
+.ansi-bright-blue-bg {
+  --bg: var(--brightBlue);
+}
+
+.ansi-bright-magenta-bg {
+  --bg: var(--brightPurple);
+}
+
+.ansi-bright-cyan-bg {
+  --bg: var(--brightCyan);
+}
+
+.ansi-bright-white-bg {
+  --bg: var(--brightWhite);
+}
+
+@font-face {
+  font-family: "Cascadia Mono";
+  src: url("CascadiaMono.ttf") format("truetype");
+}
+
+html {
+  color-scheme: dark;
+}
+
+[type="radio"] {
+  margin: 0;
+  cursor: pointer;
+  accent-color: white;
+}
+
+label {
+  color: white;
+  cursor: pointer;
+  user-select: none;
+  padding-left: 10px;
+  white-space: nowrap;
+}
+
+[type="radio"]:disabled {
+  cursor: not-allowed;
+}
+
+[type="radio"]:disabled + label {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+table {
+  border-spacing: 10px;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+}
+
+.terminal {
+  font-size: 16px;
+  white-space: pre;
+  font-weight: normal;
+  font-family: "Cascadia Mono", monospace;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+}
+
+.windows {
+  --foreground: #cccccc;
+  --background: #012456;
+  --selection: #ffffff;
+  --black: #0c0c0c;
+  --red: #c50f1f;
+  --green: #13a10e;
+  --yellow: #c19c00;
+  --blue: #0037da;
+  --purple: #881798;
+  --cyan: #3a96dd;
+  --white: #cccccc;
+  --brightBlack: #767676;
+  --brightRed: #e74856;
+  --brightGreen: #16c60c;
+  --brightYellow: #f9f1a5;
+  --brightBlue: #3b78ff;
+  --brightPurple: #b4009e;
+  --brightCyan: #61d6d6;
+  --brightWhite: #f2f2f2;
+}
+
+.ubuntu {
+  --foreground: #ffffff;
+  --background: #300a24;
+  --selection: #ffffff;
+  --black: #171421;
+  --red: #c01c28;
+  --green: #26a269;
+  --yellow: #a2734c;
+  --blue: #12488b;
+  --purple: #a347ba;
+  --cyan: #2aa1b3;
+  --white: #d0cfcc;
+  --brightBlack: #5e5c64;
+  --brightRed: #f66151;
+  --brightGreen: #33da7a;
+  --brightYellow: #e9ad0c;
+  --brightBlue: #2a7bde;
+  --brightPurple: #c061cb;
+  --brightCyan: #33c7de;
+  --brightWhite: #ffffff;
+}
+
+.android {
+  --foreground: #ffffff;
+  --background: #000000;
+  --selection: #ffffff;
+  --black: #000000;
+  --red: #cc0000;
+  --green: #00cd00;
+  --yellow: #cecd00;
+  --blue: #6395ec;
+  --purple: #ce00cd;
+  --cyan: #00cece;
+  --white: #e5e5e5;
+  --brightBlack: #7f7f7f;
+  --brightRed: #fe0000;
+  --brightGreen: #00ff01;
+  --brightYellow: #ffff00;
+  --brightBlue: #5d5cff;
+  --brightPurple: #ff00fe;
+  --brightCyan: #00ffff;
+  --brightWhite: #ffffff;
+}
+
+.freebsd {
+  --foreground: #ffffff;
+  --background: #000000;
+  --selection: #ffffff;
+  --black: #000000;
+  --red: #aa0000;
+  --green: #00aa00;
+  --yellow: #aa5500;
+  --blue: #0000aa;
+  --purple: #aa00aa;
+  --cyan: #00aaaa;
+  --white: #aaaaaa;
+  --brightBlack: #555555;
+  --brightRed: #ff5555;
+  --brightGreen: #55ff55;
+  --brightYellow: #ffff55;
+  --brightBlue: #5555ff;
+  --brightPurple: #ff55ff;
+  --brightCyan: #55ffff;
+  --brightWhite: #ffffff;
+}

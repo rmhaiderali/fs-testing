@@ -1,0 +1,26 @@
+{
+  "type": "module",
+  "scripts": {
+    "test": "node tests/index.js",
+    "build": "node build.js",
+    "predeploy": "rm -rf dist && mkdir dist && cp -r index.html results view-results view-tested-apis dist",
+    "deploy": "gh-pages -d dist -v \".gitignore results/.gitkeep\""
+  },
+  "dependencies": {
+    "bluebird": "^3.7.2",
+    "boxen": "github:rmhaiderali/boxen",
+    "cli-table": "github:rmhaiderali/cli-table",
+    "get-os-info": "^1.0.2",
+    "gh-pages": "^6.3.0",
+    "picocolors": "^1.1.1"
+  },
+  "overrides": {
+    "boxen": {
+      "chalk": "npm:picocolors@^1.1.1"
+    }
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": false
+  }
+}
