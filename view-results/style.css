@@ -144,6 +144,7 @@
 
 html {
   color-scheme: dark;
+  min-width: fit-content;
 }
 
 [type="radio"] {
@@ -182,10 +183,12 @@ table {
   font-size: 16px;
   white-space: pre;
   font-weight: normal;
+  min-width: fit-content;
   font-family: "Cascadia Mono", monospace;
 }
 
 body {
+  min-width: fit-content;
   color: var(--foreground);
   background: var(--background);
 }

@@ -1,5 +1,6 @@
 // import ansiToHtmlCustom from "./ansi-to-html.js"
 import { AnsiUp } from "https://cdn.jsdelivr.net/npm/ansi_up@6.0.2/+esm"
+import { v4 as uuidv4 } from "https://cdn.jsdelivr.net/npm/uuid@11.1.0/+esm"
 
 const ansi_up = new AnsiUp()
 ansi_up.use_classes = true
@@ -19,11 +20,16 @@ const options = {
   freebsd: ["node", "deno"],
 }
 
+const html = document.documentElement
 const osInputs = [...document.querySelectorAll("[name=os]")]
 const runtimeInputs = [...document.querySelectorAll("[name=runtime]")]
 const terminal = document.querySelector(".terminal")
+let latestReqId = ""
 
 async function updateDOM() {
+  const thisReqId = (latestReqId = uuidv4())
+
+  html.style.width = getComputedStyle(html).width
   terminal.innerHTML = "\n Loading"
 
   const osKeys = Object.keys(options)
@@ -38,13 +44,21 @@ async function updateDOM() {
 
   window[os].checked = true
   window[runtime].checked = true
+  document.body.setAttribute("class", combine(" "))
 
   const result = await fetch("../results/" + combine("_") + ".txt")
   const text = await result.text()
-  document.body.setAttribute("class", combine(" "))
-  terminal.innerHTML = result.ok
-    ? ansi_up.ansi_to_html(text)
-    : "\n " + result.statusText
+
+  // If another request has been made while this
+  // one was pending, ignore the result of this one
+  if (thisReqId !== latestReqId) return
+
+  if (result.ok) {
+    html.style.removeProperty("width")
+    terminal.innerHTML = ansi_up.ansi_to_html(text)
+  } else {
+    terminal.innerHTML = "\n " + result.statusText
+  }
 }
 
 function updateURL(replace) {
