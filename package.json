@@ -1,4 +1,5 @@
 {
+  "name": "fs-testing",
   "type": "module",
   "scripts": {
     "test": "node tests/index.js",
