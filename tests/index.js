@@ -2,12 +2,13 @@ import os from "node:os"
 import fs from "node:fs"
 import { exec } from "node:child_process"
 
-import Table from "cli-table"
 import pico from "picocolors"
+import widestLine from "widest-line"
 import { getOSInfo } from "get-os-info"
-
-import boxen from "../utils/boxen.js"
-import format from "../utils/format.js"
+import Table from "@rmhaiderali/cli-table"
+import { boxenExtended } from "boxen-extended"
+import { inspect } from "node-inspect-extracted"
+import replaceQuotes, { single, double, backtick } from "replace-quotes"
 
 import c from "./type/callback.js"
 import s from "./type/sync.js"
@@ -16,6 +17,23 @@ import p from "./type/promise.js"
 if (process.env.OS === "Windows_NT" && !process.env.MSYSTEM) {
   console.log("Run this script in POSIX-like environment e.g. Git Bash")
   process.exit(2)
+}
+
+const toDoubleQuotes = replaceQuotes(
+  single,
+  double,
+  backtick,
+  double, // Replace all above with double quotes
+)
+
+function customBoxen(items, options = {}) {
+  const textItems = items.map((item) =>
+    toDoubleQuotes(inspect(item, { colors: true, depth: null })),
+  )
+
+  const width = Math.max(...textItems.map((item) => widestLine(item))) + 4
+
+  return boxenExtended(...textItems, { boxenOptions: { ...options, width } })
 }
 
 let runtime = "unknown"
@@ -28,14 +46,14 @@ if (runtime === "unknown") {
   process.exit(2)
 }
 
-const debug = false
+const debug = !false
 const dir = import.meta.dirname + "/"
 
 function toFuncParams(func, ...params) {
   return (
     pico.blueBright(func) +
     pico.white("(") +
-    format("\"")(params, { colors: true }).slice(2, -2) +
+    toDoubleQuotes(inspect(params, { colors: true }).slice(2, -2)) +
     pico.white(")")
   )
 }
@@ -59,7 +77,7 @@ async function run(fn, api, [method, ...args]) {
   if (method === "unlink") {
     const res = await c.writeFile(testFile, "3")
     if (debug && res.err)
-      console.log(boxen([res.err], { title: fn, borderColor: "red" }))
+      console.log(customBoxen([res.err], { title: fn, borderColor: "red" }))
   }
 
   const res = await api[method](...args)
@@ -68,7 +86,7 @@ async function run(fn, api, [method, ...args]) {
   if (method === "unlink") {
     const res = await c.unlink(testFile)
     if (debug && res.err)
-      console.log(boxen([res.err], { title: fn, borderColor: "red" }))
+      console.log(customBoxen([res.err], { title: fn, borderColor: "red" }))
   }
 
   if (method === "open" && !res.err) {
@@ -76,7 +94,7 @@ async function run(fn, api, [method, ...args]) {
       api === p ? await res.data.close() : fs.closeSync(res.data)
     } catch (err) {
       if (debug)
-        console.log(boxen([res.err], { title: fn, borderColor: "red" }))
+        console.log(customBoxen([res.err], { title: fn, borderColor: "red" }))
     }
   }
 
@@ -110,9 +128,11 @@ const watchExitCode = await new Promise((resolve) => {
     (e) => {
       const code = e?.code || 0
       if (debug && code !== 0 && code !== 124)
-        console.log(boxen([e], { title: "watchFileTest", borderColor: "red" }))
+        console.log(
+          customBoxen([e], { title: "watchFileTest", borderColor: "red" }),
+        )
       resolve(code)
-    }
+    },
   )
 })
 
@@ -130,10 +150,10 @@ const unwatchExitCode = await new Promise((resolve) => {
       const code = e?.code || 0
       if (debug && code !== 0 && code !== 124)
         console.log(
-          boxen([e], { title: "unwatchFileTest", borderColor: "red" })
+          customBoxen([e], { title: "unwatchFileTest", borderColor: "red" }),
         )
       resolve(code)
-    }
+    },
   )
 })
 

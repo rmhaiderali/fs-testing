@@ -2,21 +2,28 @@
   "type": "module",
   "scripts": {
     "test": "node tests/index.js",
-    "build": "node build.js",
-    "predeploy": "rm -rf dist && mkdir dist && cp -r index.html results view-results view-tested-apis dist",
-    "deploy": "gh-pages -d dist -v \".gitignore results/.gitkeep\""
+    "save-tests": "node build.js",
+    "build": "rm -rf dist && mkdir dist && cp -r index.html results view-results view-tested-apis dist",
+    "preview": "cross-env PORT=3000 npm x serve-static-files dist",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist -v .gitignore"
   },
   "dependencies": {
+    "@rmhaiderali/cli-table": "^100.0.1",
     "bluebird": "^3.7.2",
-    "boxen": "github:rmhaiderali/boxen",
-    "cli-table": "github:rmhaiderali/cli-table",
+    "boxen": "github:sindresorhus/boxen",
+    "boxen-extended": "^0.2.2",
+    "cross-env": "^10.1.0",
     "get-os-info": "^1.0.2",
     "gh-pages": "^6.3.0",
-    "picocolors": "^1.1.1"
+    "node-inspect-extracted": "^3.3.2",
+    "picocolors": "^1.1.1",
+    "replace-quotes": "^0.1.2",
+    "serve-static-files": "^0.1.1"
   },
   "overrides": {
-    "boxen": {
-      "chalk": "npm:picocolors@^1.1.1"
+    "boxen-extended": {
+      "boxen": "github:sindresorhus/boxen"
     }
   },
   "prettier": {
